@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin Panel — Meridian Post</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="PB"></div>
+
+<!-- PASSWORD GATE -->
+<div id="gate" style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:40px 36px;max-width:380px;width:100%;text-align:center;animation:scaleIn 0.35s cubic-bezier(0.25,1,0.5,1)">
+    <div style="font-size:2.5rem;margin-bottom:14px">🔐</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;margin-bottom:6px">Admin Panel</div>
+    <div style="font-size:0.8rem;color:var(--muted);margin-bottom:24px">Meridian Post · J. Asghar</div>
+    <div style="position:relative;margin-bottom:12px">
+      <input class="form-input" type="password" id="gateInput" placeholder="Enter your password" onkeydown="if(event.key==='Enter')unlockGate()" style="padding-right:44px">
+      <button style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:0.9rem;cursor:pointer" onclick="toggleGateEye()" id="gateEye">👁</button>
+    </div>
+    <div style="font-size:0.75rem;color:var(--red);margin-bottom:12px;display:none" id="gateErr">Incorrect password.</div>
+    <button class="btn-primary" onclick="unlockGate()">Enter Admin Panel</button>
+    <div style="margin-top:14px"><a href="index.html" style="font-size:0.75rem;color:var(--muted);transition:color 0.2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--muted)'">← Back to Meridian Post</a></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL (hidden until password) -->
+<div id="adminPanel" style="display:none">
+  <!-- Header -->
+  <div class="admin-header">
+    <div style="display:flex;align-items:center;gap:14px">
+      <a href="index.html" style="display:flex;align-items:center;gap:8px">
+        <div style="width:30px;height:30px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:0.9rem;color:#000">M</div>
+      </a>
+      <div class="admin-title">Admin Panel</div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn-theme" id="btnTheme" onclick="toggleTheme()">☀️</button>
+      <button class="btn-primary" style="width:auto;padding:8px 16px;font-size:0.75rem" onclick="openEditor()">✏️ New Article</button>
+      <a href="index.html" style="padding:8px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;color:var(--text);transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">View Site →</a>
+    </div>
+  </div>
+
+  <div class="admin-grid">
+    <!-- Sidebar Nav -->
+    <div class="admin-sidebar">
+      <div class="admin-nav-item active" onclick="showSection('dashboard',this)">📊 Dashboard</div>
+      <div class="admin-nav-item" onclick="showSection('articles',this)">📰 All Articles</div>
+      <div class="admin-nav-item" onclick="showSection('drafts',this)">💾 Drafts</div>
+      <div class="admin-nav-item" onclick="showSection('breaking',this)">⚡ Breaking News</div>
+      <div class="admin-nav-item" onclick="showSection('settings',this)">⚙️ Settings</div>
+    </div>
+
+    <!-- Content -->
+    <div class="admin-content">
+
+      <!-- DASHBOARD -->
+      <div class="admin-section active" id="sec-dashboard">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:24px">Good to see you, J. Asghar 👋</h2>
+        <div class="admin-stats" id="adminStats">
+          <div class="stat-card"><div class="stat-val" id="statTotal">—</div><div class="stat-label">Total Articles</div></div>
+          <div class="stat-card"><div class="stat-val" id="statLive">—</div><div class="stat-label">Live Articles</div></div>
+          <div class="stat-card"><div class="stat-val" id="statDrafts">—</div><div class="stat-label">Drafts</div></div>
+          <div class="stat-card"><div class="stat-val" id="statViews">—</div><div class="stat-label">Total Views</div></div>
+        </div>
+        <div class="sec-head"><span class="sec-label">Recent Articles</span><div class="sec-line"></div></div>
+        <div id="recentArticles"><p style="color:var(--muted);font-size:0.88rem">Loading...</p></div>
+      </div>
+
+      <!-- ALL ARTICLES -->
+      <div class="admin-section" id="sec-articles">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+          <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700">All Articles</h2>
+          <button class="btn-primary" style="width:auto;padding:8px 18px;font-size:0.78rem" onclick="openEditor()">+ New Article</button>
+        </div>
+        <div id="allArticlesList"><p style="color:var(--muted);font-size:0.88rem">Loading...</p></div>
+      </div>
+
+      <!-- DRAFTS -->
+      <div class="admin-section" id="sec-drafts">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:24px">Drafts</h2>
+        <div id="draftsList"><p style="color:var(--muted);font-size:0.88rem">Loading...</p></div>
+      </div>
+
+      <!-- BREAKING NEWS -->
+      <div class="admin-section" id="sec-breaking">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:8px">Breaking News Banner</h2>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:24px">These headlines rotate on the red banner at the top of every page.</p>
+        <div id="breakingList"></div>
+        <div style="margin-top:20px;display:flex;gap:10px">
+          <input class="form-input" id="newBreaking" placeholder="Add a new breaking news headline..." style="flex:1">
+          <button class="btn-primary" style="width:auto;padding:11px 20px;font-size:0.8rem" onclick="addBreaking()">+ Add</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="admin-section" id="sec-settings">
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:24px">Settings</h2>
+        <div class="widget" style="max-width:500px">
+          <div class="widget-title"><span class="widget-title-left">Editor's Note</span></div>
+          <div class="form-group">
+            <label class="form-label">Quote text</label>
+            <textarea class="form-textarea" id="settingQuote" style="min-height:90px" placeholder="The quote shown in the Editor's Note sidebar widget..."></textarea>
+          </div>
+          <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="PW"></div><div id="ED"></div><div id="TO"></div>
+
+<script src="app.js"></script>
+<script>
+document.getElementById('PB').innerHTML = progressHTML();
+document.getElementById('PW').innerHTML = pwdModalHTML();
+document.getElementById('ED').innerHTML = editorModalHTML();
+document.getElementById('TO').innerHTML = toastHTML();
+initTheme();
+initScroll();
+document.addEventListener('click', e => { if(e.target.id==='editorOverlay') closeEditor(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeEditor(); });
+
+// Gate
+function toggleGateEye() {
+  const i = document.getElementById('gateInput');
+  const b = document.getElementById('gateEye');
+  i.type = i.type === 'password' ? 'text' : 'password';
+  b.textContent = i.type === 'password' ? '👁' : '🙈';
+}
+async function unlockGate() {
+  const val = document.getElementById('gateInput').value.trim();
+  const err = document.getElementById('gateErr');
+  if (!val) return;
+  const ok = await checkPwd(val);
+  if (ok) {
+    editorUnlocked = true;
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadDashboard();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('gateInput').value = '';
+    document.getElementById('gateInput').focus();
+  }
+}
+
+function showSection(id, el) {
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'articles') loadAllArticles();
+  if (id === 'drafts') loadDrafts();
+  if (id === 'breaking') loadBreaking();
+}
+
+async function loadDashboard() {
+  try {
+    const all = await getAllArticles();
+    const live = all.filter(a => !a.is_draft);
+    const drafts = all.filter(a => a.is_draft);
+    const totalViews = all.reduce((s, a) => s + (a.views||0), 0);
+    document.getElementById('statTotal').textContent = all.length;
+    document.getElementById('statLive').textContent = live.length;
+    document.getElementById('statDrafts').textContent = drafts.length;
+    document.getElementById('statViews').textContent = totalViews.toLocaleString();
+    document.getElementById('recentArticles').innerHTML = live.slice(0,5).map(a => articleRow(a)).join('') || '<p style="color:var(--muted);font-size:0.88rem">No articles yet.</p>';
+  } catch(e) {
+    document.getElementById('recentArticles').innerHTML = '<p style="color:var(--muted)">Could not load.</p>';
+  }
+}
+
+async function loadAllArticles() {
+  const el = document.getElementById('allArticlesList');
+  el.innerHTML = '<p style="color:var(--muted)">Loading...</p>';
+  const all = await getAllArticles();
+  const live = all.filter(a => !a.is_draft);
+  el.innerHTML = live.length ? live.map(a => articleRow(a)).join('') : '<p style="color:var(--muted);font-size:0.88rem">No published articles yet.</p>';
+}
+
+async function loadDrafts() {
+  const el = document.getElementById('draftsList');
+  el.innerHTML = '<p style="color:var(--muted)">Loading...</p>';
+  const drafts = await getArticles(true);
+  el.innerHTML = drafts.length ? drafts.map(a =>
+    '<div class="draft-item">' +
+      '<div><div class="draft-title">' + escH(a.title) + '</div>' +
+      '<div class="draft-meta">' + a.category + ' · Saved ' + timeAgo(a.created_at) + '</div></div>' +
+      '<div class="draft-actions">' +
+        '<button class="btn-xs" onclick="openEditor(' + a.id + ')">Edit</button>' +
+        '<button class="btn-xs" onclick="publishDraft(' + a.id + ')">Publish</button>' +
+        '<button class="btn-xs btn-xs-del" onclick="delArticle(' + a.id + ',\'draftsList\',loadDrafts)">Delete</button>' +
+      '</div>' +
+    '</div>'
+  ).join('') : '<p style="color:var(--muted);font-size:0.88rem">No drafts saved.</p>';
+}
+
+function articleRow(a) {
+  return '<div class="article-row">' +
+    '<div><div class="article-row-title">' + escH(a.title) + '</div>' +
+    '<div class="article-row-meta"><span>' + escH(a.category) + '</span><span>👁 ' + (a.views||0) + ' views</span><span>' + timeAgo(a.created_at) + '</span></div></div>' +
+    '<div class="article-row-actions">' +
+      '<button class="btn-xs" onclick="goPub(' + a.id + ')">View</button>' +
+      '<button class="btn-xs" onclick="openEditor(' + a.id + ')">Edit</button>' +
+      '<button class="btn-xs btn-xs-del" onclick="delArticle(' + a.id + ')">Delete</button>' +
+    '</div>' +
+  '</div>';
+}
+
+async function delArticle(id, listId, reloadFn) {
+  if (!confirm('Delete permanently?')) return;
+  try { await deleteArticle(id); showToast('Deleted.'); if(reloadFn) reloadFn(); else loadDashboard(); }
+  catch { showToast('Error.'); }
+}
+
+async function publishDraft(id) {
+  try { await updateArticle(id, {is_draft: false}); showToast('Published!'); loadDrafts(); }
+  catch { showToast('Error.'); }
+}
+
+// Breaking news (stored in localStorage for simplicity)
+const DEFAULT_BREAKING = [
+  'Iran nuclear talks reach critical impasse as US deadline expires',
+  'Gold surges to all-time record as central banks diversify',
+  'Russia launches largest drone strike on Kyiv in six months',
+  'China GDP growth beats expectations at 5.2% despite tariffs',
+  'OpenAI faces EU regulatory action over data privacy violations'
+];
+
+function loadBreaking() {
+  const saved = JSON.parse(localStorage.getItem('mp-breaking') || 'null') || DEFAULT_BREAKING;
+  const el = document.getElementById('breakingList');
+  el.innerHTML = saved.map((t,i) =>
+    '<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)">' +
+      '<span style="font-size:0.84rem;color:var(--text);flex:1;padding-right:12px">' + escH(t) + '</span>' +
+      '<button class="btn-xs btn-xs-del" onclick="removeBreaking(' + i + ')">×</button>' +
+    '</div>'
+  ).join('');
+}
+
+function addBreaking() {
+  const input = document.getElementById('newBreaking');
+  const val = input.value.trim();
+  if (!val) return;
+  const saved = JSON.parse(localStorage.getItem('mp-breaking') || 'null') || DEFAULT_BREAKING;
+  saved.push(val);
+  localStorage.setItem('mp-breaking', JSON.stringify(saved));
+  input.value = '';
+  loadBreaking();
+  showToast('Breaking headline added.');
+}
+
+function removeBreaking(idx) {
+  const saved = JSON.parse(localStorage.getItem('mp-breaking') || 'null') || DEFAULT_BREAKING;
+  saved.splice(idx, 1);
+  localStorage.setItem('mp-breaking', JSON.stringify(saved));
+  loadBreaking();
+}
+
+function saveSettings() {
+  const quote = document.getElementById('settingQuote').value.trim();
+  if (quote) { localStorage.setItem('mp-quote', quote); showToast('Settings saved.'); }
+}
+
+// Override loadPublished to refresh admin
+const origLoadPub = typeof loadPublished === 'function' ? loadPublished : ()=>{};
+async function loadAdminArticles() { loadDashboard(); loadAllArticles(); }
+</script>
+</body>
+</html>

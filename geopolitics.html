@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Geopolitics — Meridian Post</title>
+<meta name="description" content="Geopolitics news — power shifts, conflicts, alliances. Meridian Post."/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="P"></div><div id="N"></div><div id="A"></div><div id="T"></div><div id="C"></div>
+<div class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Geopolitics</span></div>
+<div class="page-hero" style="background:linear-gradient(to bottom,rgba(224,90,43,0.07),transparent)">
+  <div class="page-hero-label">Section</div>
+  <h1>🌍 Geopolitics</h1>
+  <p>Power shifts, conflicts, sanctions, alliances and the forces reshaping the international order.</p>
+</div>
+<div class="layout">
+  <div>
+    <div class="sec-head"><span class="sec-label">Latest Geopolitics</span><div class="sec-line"></div><span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted)" id="upd"></span></div>
+    <div id="newsGrid"></div>
+  </div>
+  <aside class="sidebar">
+    <div class="widget widget-glass"><div class="widget-title"><span class="widget-title-left">📊 Markets</span></div><div id="marketWidget"></div></div>
+    <div class="widget"><div class="widget-title"><span class="widget-title-left">💱 Currency</span></div><div id="converterWidget"></div></div>
+    <div class="widget"><div class="widget-title"><span class="widget-title-left">📂 Other Sections</span></div><div class="sec-links"><a href="world-politics.html" class="sec-link">🏛️ World Politics <span>→</span></a><a href="markets.html" class="sec-link">📈 Markets <span>→</span></a><a href="technology.html" class="sec-link">💻 Technology <span>→</span></a></div></div>
+    <div class="widget"><div class="widget-title"><span class="widget-title-left">✍️ Editor's Note</span></div><div class="quote-box"><div class="quote-text">"Every geopolitical conflict has an economic root. Follow the money, find the truth."</div><div class="quote-sig">— J. Asghar, Editor</div></div></div>
+  </aside>
+</div>
+<div id="F"></div><div id="PW"></div><div id="ED"></div><div id="TO"></div><div id="BT"></div><div id="PB"></div>
+<script src="app.js"></script>
+<script>
+document.getElementById('P').innerHTML=progressHTML();document.getElementById('N').innerHTML=navHTML('geopolitics');document.getElementById('A').innerHTML=alertHTML();document.getElementById('T').innerHTML=tickerHTML();document.getElementById('C').innerHTML=clockHTML();document.getElementById('F').innerHTML=footerHTML();document.getElementById('PW').innerHTML=pwdModalHTML();document.getElementById('ED').innerHTML=editorModalHTML();document.getElementById('TO').innerHTML=toastHTML();document.getElementById('BT').innerHTML=backTopHTML();initPage('geopolitics');
+async function load(){showSkeleton('newsGrid',6);const a=await fetchNews('geopolitics');renderCards(a,'geopolitics','newsGrid');document.getElementById('upd').textContent='Updated '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}load();
+</script>
+</body></html>

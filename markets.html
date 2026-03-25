@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Markets — Meridian Post</title>
+<meta name="description" content="Markets news — stocks, commodities, currencies. Meridian Post."/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="P"></div><div id="N"></div><div id="A"></div><div id="T"></div><div id="C"></div>
+<div class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span class="breadcrumb-current">Markets</span></div>
+<div class="page-hero" style="background:linear-gradient(to bottom,rgba(62,207,142,0.07),transparent)">
+  <div class="page-hero-label">Section</div>
+  <h1>📈 Markets</h1>
+  <p>Stocks, commodities, currencies and the economic forces driving global financial markets.</p>
+</div>
+<div style="padding:0 5vw 40px">
+  <div class="sec-head" style="margin-top:36px"><span class="sec-label">Live Market Overview</span><div class="sec-line"></div></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-bottom:44px" id="mktCards"></div>
+</div>
+<div class="layout">
+  <div>
+    <div class="sec-head"><span class="sec-label">Markets News</span><div class="sec-line"></div></div>
+    <div id="newsGrid"></div>
+  </div>
+  <aside class="sidebar">
+    <div class="widget widget-glass"><div class="widget-title"><span class="widget-title-left">📊 Detailed Markets</span></div><div id="marketWidget"></div></div>
+    <div class="widget"><div class="widget-title"><span class="widget-title-left">💱 Currency Converter</span></div><div id="converterWidget"></div></div>
+    <div class="widget"><div class="widget-title"><span class="widget-title-left">📂 Other Sections</span></div><div class="sec-links"><a href="geopolitics.html" class="sec-link">🌍 Geopolitics <span>→</span></a><a href="world-politics.html" class="sec-link">🏛️ World Politics <span>→</span></a><a href="technology.html" class="sec-link">💻 Technology <span>→</span></a></div></div>
+  </aside>
+</div>
+<div id="F"></div><div id="PW"></div><div id="ED"></div><div id="TO"></div><div id="BT"></div><div id="PB"></div>
+<script src="app.js"></script>
+<script>
+document.getElementById('P').innerHTML=progressHTML();document.getElementById('N').innerHTML=navHTML('markets');document.getElementById('A').innerHTML=alertHTML();document.getElementById('T').innerHTML=tickerHTML();document.getElementById('C').innerHTML=clockHTML();document.getElementById('F').innerHTML=footerHTML();document.getElementById('PW').innerHTML=pwdModalHTML();document.getElementById('ED').innerHTML=editorModalHTML();document.getElementById('TO').innerHTML=toastHTML();document.getElementById('BT').innerHTML=backTopHTML();initPage('markets');
+var FM=[{n:'S&P 500',v:'5,480.32',c:'+0.62%',u:true,s:'US Stocks'},{n:'NASDAQ',v:'17,890',c:'+0.88%',u:true,s:'US Tech'},{n:'DOW',v:'42,311',c:'-0.14%',u:false,s:'Blue Chip'},{n:'NIFTY 50',v:'23,412',c:'+0.45%',u:true,s:'India'},{n:'SENSEX',v:'77,102',c:'+0.38%',u:true,s:'India'},{n:'Gold',v:'$3,124',c:'+1.2%',u:true,s:'Commodity'},{n:'Crude WTI',v:'$74.30',c:'-0.8%',u:false,s:'Oil'},{n:'Bitcoin',v:'$87,440',c:'+2.1%',u:true,s:'Crypto'},{n:'Ethereum',v:'$3,210',c:'+1.4%',u:true,s:'Crypto'},{n:'Silver',v:'$32.80',c:'+0.9%',u:true,s:'Commodity'},{n:'USD/INR',v:'₹83.42',c:'+0.1%',u:false,s:'Currency'},{n:'EUR/USD',v:'1.0831',c:'-0.3%',u:false,s:'Currency'}];
+document.getElementById('mktCards').innerHTML=FM.map(m=>'<div style="background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:16px;border-top:3px solid '+(m.u?'var(--green)':'var(--red)')+'"><div style="font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">'+m.s+'</div><div style="font-size:0.83rem;font-weight:700;color:var(--text);margin-bottom:7px">'+m.n+'</div><div style="font-family:\'DM Mono\',monospace;font-size:1.05rem;font-weight:700;color:var(--text)">'+m.v+'</div><div style="font-family:\'DM Mono\',monospace;font-size:0.74rem;color:'+(m.u?'var(--green)':'var(--red)')+';margin-top:4px">'+(m.u?'▲':'▼')+' '+m.c+'</div></div>').join('');
+async function load(){showSkeleton('newsGrid',6);const a=await fetchNews('markets');renderCards(a,'markets','newsGrid');}load();
+</script>
+</body></html>

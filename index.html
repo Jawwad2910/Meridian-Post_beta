@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Meridian Post — World News, Geopolitics & Analysis</title>
+<meta name="description" content="Meridian Post covers world politics, geopolitics, markets and technology with sharp analysis. Founded by J. Asghar."/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="P"></div><div id="N"></div><div id="A"></div><div id="T"></div><div id="C"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-date" id="heroDate"></div>
+  <div class="hero-grid" id="heroGrid">
+    <div class="hero-main">
+      <div class="skeleton skel-line" style="height:20px;width:100px;margin-bottom:14px;border-radius:3px"></div>
+      <div class="skeleton skel-line skel-l" style="height:40px;margin-bottom:8px"></div>
+      <div class="skeleton skel-line skel-m" style="height:40px;margin-bottom:8px"></div>
+      <div class="skeleton skel-line" style="height:40px;width:50%;margin-bottom:20px"></div>
+      <div class="skeleton skel-line skel-l" style="height:13px;margin-bottom:7px"></div>
+      <div class="skeleton skel-line skel-m" style="height:13px;margin-bottom:7px"></div>
+      <div class="skeleton skel-line" style="height:13px;width:65%"></div>
+    </div>
+    <div class="hero-side">
+      <div class="side-item"><div class="skeleton skel-line" style="height:10px;width:80px;margin-bottom:8px"></div><div class="skeleton skel-line skel-l" style="height:14px;margin-bottom:5px"></div><div class="skeleton skel-line skel-m" style="height:14px"></div></div>
+      <div class="side-item"><div class="skeleton skel-line" style="height:10px;width:80px;margin-bottom:8px"></div><div class="skeleton skel-line skel-l" style="height:14px;margin-bottom:5px"></div><div class="skeleton skel-line skel-m" style="height:14px"></div></div>
+      <div class="side-item" style="border-bottom:none;padding-bottom:0"><div class="skeleton skel-line" style="height:10px;width:80px;margin-bottom:8px"></div><div class="skeleton skel-line skel-l" style="height:14px;margin-bottom:5px"></div><div class="skeleton skel-line skel-m" style="height:14px"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<div class="layout">
+  <div>
+    <!-- SEARCH -->
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="searchInput" placeholder="Search published articles..." oninput="handleSearch(this.value)"/>
+      <button class="search-clear" id="searchClear" onclick="clearSearch()">×</button>
+    </div>
+
+    <!-- CATEGORY TABS -->
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" onclick="switchTab('all',this)">🌐 All</button>
+      <button class="cat-tab" onclick="switchTab('geopolitics',this)">🌍 Geopolitics</button>
+      <button class="cat-tab" onclick="switchTab('world',this)">🏛️ Politics</button>
+      <button class="cat-tab" onclick="switchTab('markets',this)">📈 Markets</button>
+      <button class="cat-tab" onclick="switchTab('technology',this)">💻 Tech</button>
+    </div>
+
+    <!-- FEATURED -->
+    <div id="featuredCard"></div>
+
+    <!-- LATEST NEWS -->
+    <div class="sec-head">
+      <span class="sec-label" id="newsLabel">Latest World News</span>
+      <div class="sec-line"></div>
+      <span style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted)" id="lastUpdated"></span>
+    </div>
+    <div id="newsGrid"></div>
+
+    <!-- PUBLISHED ARTICLES -->
+    <div id="pubWrapper" style="display:none;margin-top:52px">
+      <div class="sec-head">
+        <span class="sec-label">From the Editor</span>
+        <div class="sec-line"></div>
+      </div>
+      <div class="pub-grid" id="pubGrid"></div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="widget widget-glass">
+      <div class="widget-title"><span class="widget-title-left">📊 Live Markets</span></div>
+      <div id="marketWidget"></div>
+    </div>
+    <div class="widget">
+      <div class="widget-title"><span class="widget-title-left">💱 Currency Converter</span></div>
+      <div id="converterWidget"></div>
+    </div>
+    <div class="widget">
+      <div class="widget-title"><span class="widget-title-left">✍️ Editor's Note</span></div>
+      <div class="quote-box">
+        <div class="quote-text">"The world is not moving toward chaos — it's moving toward a multipolar order the old powers haven't learned to live in yet."</div>
+        <div class="quote-sig">— J. Asghar, Founder & Editor</div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget-title"><span class="widget-title-left">🔥 Trending</span></div>
+      <div id="trendingWidget">
+        <div class="trend-item"><span class="trend-num">--</span><div class="skeleton skel-line" style="flex:1;height:12px;border-radius:3px"></div></div>
+        <div class="trend-item"><span class="trend-num">--</span><div class="skeleton skel-line" style="flex:1;height:12px;border-radius:3px"></div></div>
+        <div class="trend-item"><span class="trend-num">--</span><div class="skeleton skel-line" style="flex:1;height:12px;border-radius:3px"></div></div>
+        <div class="trend-item"><span class="trend-num">--</span><div class="skeleton skel-line" style="flex:1;height:12px;border-radius:3px"></div></div>
+        <div class="trend-item" style="border-bottom:none"><span class="trend-num">--</span><div class="skeleton skel-line" style="flex:1;height:12px;border-radius:3px"></div></div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget-title"><span class="widget-title-left">📈 Most Read</span></div>
+      <div id="mostReadWidget"><p style="font-size:0.8rem;color:var(--muted)">Loading...</p></div>
+    </div>
+    <div class="widget">
+      <div class="widget-title"><span class="widget-title-left">🗂️ Sections</span></div>
+      <div class="sec-links">
+        <a href="geopolitics.html" class="sec-link">🌍 Geopolitics <span>→</span></a>
+        <a href="world-politics.html" class="sec-link">🏛️ World Politics <span>→</span></a>
+        <a href="markets.html" class="sec-link">📈 Markets <span>→</span></a>
+        <a href="technology.html" class="sec-link">💻 Technology <span>→</span></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- COUNTRY SPOTLIGHT -->
+<div class="country-section">
+  <div class="sec-head"><span class="sec-label">Country Spotlight</span><div class="sec-line"></div></div>
+  <div class="country-grid" id="countryGrid"></div>
+</div>
+
+<div id="F"></div><div id="PW"></div><div id="ED"></div><div id="EP"></div><div id="TO"></div><div id="BT"></div><div id="PB"></div>
+
+<script src="app.js"></script>
+<script>
+document.getElementById('P').innerHTML = progressHTML();
+document.getElementById('N').innerHTML = navHTML('index');
+document.getElementById('A').innerHTML = alertHTML();
+document.getElementById('T').innerHTML = tickerHTML();
+document.getElementById('C').innerHTML = clockHTML();
+document.getElementById('F').innerHTML = footerHTML();
+document.getElementById('PW').innerHTML = pwdModalHTML();
+document.getElementById('ED').innerHTML = editorModalHTML();
+document.getElementById('EP').innerHTML = emailPopupHTML();
+document.getElementById('TO').innerHTML = toastHTML();
+document.getElementById('BT').innerHTML = backTopHTML();
+initPage('index');
+buildCountries('countryGrid');
+
+let currentTab = 'all';
+let currentNews = [];
+
+async function loadNews(tab) {
+  showSkeleton('newsGrid', 4);
+  document.getElementById('lastUpdated').textContent = '';
+  try {
+    const articles = await fetchNews(tab);
+    currentNews = articles;
+    renderCards(articles, tab === 'all' ? 'geopolitics' : tab, 'newsGrid');
+    buildHero(articles);
+    buildTrending(articles);
+    buildFeatured(articles[4] || articles[0], tab);
+    document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+    const labels = {all:'Latest World News',geopolitics:'Geopolitics',world:'World Politics',markets:'Markets & Finance',technology:'Technology'};
+    document.getElementById('newsLabel').textContent = labels[tab] || 'Latest Stories';
+  } catch(e) {
+    document.getElementById('newsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 0"><div style="font-size:2.5rem;margin-bottom:14px">📡</div><p style="color:var(--muted)">Could not load news. Check your connection.</p><button style="margin-top:14px;background:var(--accent);color:#000;border:none;padding:9px 22px;border-radius:5px;font-size:0.78rem;font-weight:700;cursor:pointer" onclick="loadNews(currentTab)">Try Again</button></div>';
+  }
+}
+
+function switchTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadNews(tab);
+}
+
+function buildHero(articles) {
+  if (!articles?.length) return;
+  const main = articles[0];
+  const side = articles.slice(1,4);
+  const src = cleanSrc(main.author||'');
+  const time = timeAgo(main.pubDate);
+  const data = d => encodeURIComponent(JSON.stringify({
+    title:d.title, description:d.description?.replace(/<[^>]*>/g,'').slice(0,500)||'',
+    source:cleanSrc(d.author||''), time:timeAgo(d.pubDate),
+    url:d.link, image:d.thumbnail?.startsWith('http')?d.thumbnail:'', category:'World News'
+  }));
+  document.getElementById('heroGrid').innerHTML =
+    '<div class="hero-main">' +
+      '<div class="hero-tag"><span class="hero-tag-dot"></span>Breaking News</div>' +
+      '<h1 class="hero-h1" onclick="goNews(\'' + data(main) + '\')">' + escH(main.title) + '</h1>' +
+      (main.description ? '<p class="hero-desc">' + escH(main.description.replace(/<[^>]*>/g,'').slice(0,160)) + '...</p>' : '') +
+      '<div class="hero-meta">' +
+        '<span class="author">' + escH(src) + '</span><span>·</span><span>' + time + '</span>' +
+        '<span class="live-badge"><span class="live-dot"></span>Live</span>' +
+        '<a href="' + escA(main.link) + '" target="_blank" rel="noopener" class="btn-read" onclick="event.stopPropagation()">Read Full Story →</a>' +
+      '</div>' +
+    '</div>' +
+    '<div class="hero-side">' +
+      side.map(item =>
+        '<div class="side-item" onclick="goNews(\'' + data(item) + '\')">' +
+          '<div class="side-cat cat-geo">' + escH(cleanSrc(item.author||'')) + '</div>' +
+          '<div class="side-title">' + escH(item.title) + '</div>' +
+          '<div class="side-time">' + timeAgo(item.pubDate) + '</div>' +
+        '</div>'
+      ).join('') +
+    '</div>';
+}
+
+function buildFeatured(item, tab) {
+  if (!item) return;
+  const el = document.getElementById('featuredCard');
+  if (!el) return;
+  const meta = CAT_META[tab === 'all' ? 'geopolitics' : tab] || CAT_META.geopolitics;
+  const src = cleanSrc(item.author||'');
+  const time = timeAgo(item.pubDate);
+  const data = encodeURIComponent(JSON.stringify({
+    title:item.title, description:item.description?.replace(/<[^>]*>/g,'').slice(0,500)||'',
+    source:src, time, url:item.link,
+    image:item.thumbnail?.startsWith('http')?item.thumbnail:'', category:meta.label
+  }));
+  el.innerHTML =
+    '<div class="featured-card" onclick="goNews(\'' + data + '\')">' +
+      '<div class="featured-img" style="background:' + meta.bg + '"><div class="featured-img-inner">' + meta.icon + '</div></div>' +
+      '<div class="featured-body">' +
+        '<span class="featured-tag">Featured</span>' +
+        '<div class="featured-title">' + escH(item.title) + '</div>' +
+        (item.description ? '<div class="featured-desc">' + escH(item.description.replace(/<[^>]*>/g,'').slice(0,200)) + '...</div>' : '') +
+        '<div class="featured-meta"><span class="featured-author">' + escH(src) + '</span><span>' + time + '</span><span>⏱ ' + readTime(item.description||'') + ' min read</span></div>' +
+      '</div>' +
+    '</div>';
+}
+
+function buildTrending(articles) {
+  const el = document.getElementById('trendingWidget');
+  if (!el||!articles.length) return;
+  el.innerHTML = articles.slice(0,5).map((item,i) => {
+    const src = cleanSrc(item.author||'');
+    const data = encodeURIComponent(JSON.stringify({
+      title:item.title, description:item.description?.replace(/<[^>]*>/g,'').slice(0,500)||'',
+      source:src, time:timeAgo(item.pubDate), url:item.link,
+      image:item.thumbnail?.startsWith('http')?item.thumbnail:'', category:'World News'
+    }));
+    return '<div class="trend-item" onclick="goNews(\'' + data + '\')">' +
+      '<span class="trend-num">0' + (i+1) + '</span>' +
+      '<span class="trend-title">' + escH(item.title.slice(0,80)) + (item.title.length>80?'...':'') + '</span>' +
+    '</div>';
+  }).join('');
+}
+
+loadNews('all');
+loadPublished();
+buildMostRead();
+</script>
+</body>
+</html>
